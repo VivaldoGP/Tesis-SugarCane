@@ -57,19 +57,6 @@ def ndre_1(image):
     return ndre1_calc
 
 
-def calc_index(image_path: str, shp_path: str):
-    try:
-        with rasterio.open(image_path) as src:
-            transform = src.transform
-            index_band = ndvi(src)
-
-            zonal_stats_ = rasterstats.zonal_stats(shp_path, index_band, affine=transform,
-                                                   stats=['mean', 'max', 'min'])
-            return zonal_stats_
-    except (rasterio.errors.RasterioIOError, ValueError):
-        return None
-
-
 parcel_image_list = []
 
 for dir_ in os.listdir(sen_images_path):
@@ -88,7 +75,7 @@ ndvi_stats = {}
 for i in parcel_image_list:
     with fiona.open(parcelas_path, "r") as src:
         for features_ in src:
-            if i.get("Parcela_dir") == "Parcela_11":
+            if i.get("Parcela_dir") == "Parcela_10":
                 if features_["properties"]["Id"] == i.get("Parcela_id"):
                     try:
                         with rasterio.open(i.get("Img_path")) as isrc:
@@ -98,6 +85,7 @@ for i in parcel_image_list:
 
                             zonal_stats = rasterstats.zonal_stats(features_, ndvi_band,
                                                                   affine=transform)
+                            print(i.get('Img_path'))
                             print(zonal_stats[0])
                             ndvi_stats[date_from_filename(i.get("Img_path"))] = {"Parcela": i.get("Parcela_id"),
                                                                                  "mean": zonal_stats[0]['mean'],
@@ -107,38 +95,7 @@ for i in parcel_image_list:
                     except rasterio.errors.RasterioIOError:
                         print('f')
 
-print(ndvi_stats)
-'''
-sen_images = {}
-
-for file in os.listdir(sen_images_path):
-    if file.endswith('.tif'):
-        full_path = os.path.join(sen_images_path, file)
-        fecha = date_from_filename(filename=file)
-        if fecha:
-            sen_images[fecha] = full_path
-
-ndvi_stats = {}
-'''
-'''
-for fecha, image_path_ in sen_images.items():
-    zonal_stats = calc_ndvi(image_path=image_path_, shp_path=parcelas_path)
-    if zonal_stats:
-        imagen = image_path_.split('_')
-        for num, feature in enumerate(zonal_stats):
-            key = f"{num + 1}_{imagen[-3]}"
-            ndvi_stats[key] = {
-                'imagen': imagen[-3],
-                'fecha': fecha,
-                'num_parcela': num + 1,
-                'mean_ndvi': feature['mean'],
-                'max_ndvi': feature['max'],
-                'min_ndvi': feature['min']
-            }
-
-ndvi_df.reset_index(inplace=True)
-'''
+# print(ndvi_stats)
 
 ndvi_df = pd.DataFrame.from_dict(ndvi_stats, orient='index')
-ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcela11.csv")
-print(ndvi_stats)
+ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcela10.csv")
