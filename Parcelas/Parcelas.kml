@@ -1,0 +1,80 @@
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<Placemark>
+<ExtendedData>
+  <Data name="Productor"><value>Héctor Hernandez Gallegos</value></Data>
+  <Data name="Ciclo"><value>Soca</value></Data>
+  <Data name="Riego"><value>Gravedad</value></Data>
+  <Data name="Rendimiento"><value>48</value></Data>
+  <Data name="Variedad"><value>CP:722086</value></Data>
+  <Data name="Siembra"><value>2022-02-02</value></Data>
+  <Data name="Cosecha"><value>2023-04-15</value></Data></ExtendedData>
+  <Polygon>
+<outerBoundaryIs>
+  <LinearRing><coordinates>-99.00541708524658,22.78566239152771
+-99.00613748941505,22.785145228609665
+-99.0068490348283,22.784586124912096
+-99.0070079332049,22.783308357242205
+-99.00679241075494,22.782804966444218
+-99.00416577564236,22.782461414232813
+-99.00370659893896,22.78545164019698
+-99.00541708524658,22.78566239152771</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark>
+<ExtendedData>
+  <Data name="Productor"><value>Maria Antonia Torres Alvarado</value></Data>
+  <Data name="Ciclo"><value>Resoca 1</value></Data>
+  <Data name="Riego"><value>Gravedad</value></Data>
+  <Data name="Rendimiento"><value>60</value></Data>
+  <Data name="Variedad"><value>CP:722086</value></Data>
+  <Data name="Siembra"><value>2022-02-20</value></Data>
+  <Data name="Cosecha"><value>2023-04-12</value></Data></ExtendedData>
+  <Polygon>
+<outerBoundaryIs>
+  <LinearRing><coordinates>-98.99928320016905,22.81571006707844
+-98.99885096549728,22.81453401691138
+-98.99432031291144,22.813449161630743
+-98.99412762998541,22.814596419828035
+-98.99928320016905,22.81571006707844</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark>
+<ExtendedData>
+  <Data name="Productor"><value>Juan Ariel Izaguirre Paz</value></Data>
+  <Data name="Ciclo"><value>Soca</value></Data>
+  <Data name="Riego"><value>Bombeo</value></Data>
+  <Data name="Rendimiento"><value>45</value></Data>
+  <Data name="Variedad"><value>CP:722086</value></Data>
+  <Data name="Siembra"><value>2022-02-05</value></Data>
+  <Data name="Cosecha"><value>2023-03-01</value></Data></ExtendedData>
+  <Polygon>
+<outerBoundaryIs>
+  <LinearRing><coordinates>-99.05606116118018,22.85935448324608
+-99.05612073599973,22.859276060529737
+-99.05612073599973,22.858448698113065
+-99.05607392721299,22.85761348829017
+-99.05473774911803,22.857691911965887
+-99.05467391895421,22.859448590446164
+-99.05606116118018,22.85935448324608</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark>
+<ExtendedData>
+  <Data name="Productor"><value>Alfredo Esaul Cruz Paz</value></Data>
+  <Data name="Ciclo"><value>Resoca</value></Data>
+  <Data name="Riego"><value>Gravedad</value></Data>
+  <Data name="Rendimiento"><value>50</value></Data>
+  <Data name="Variedad"><value>CP:722086</value></Data>
+  <Data name="Siembra"><value>2022-01-15</value></Data>
+  <Data name="Cosecha"><value>2023-03-20</value></Data></ExtendedData>
+  <Polygon>
+<outerBoundaryIs>
+  <LinearRing><coordinates>-99.00964917617155,22.794911778187114
+-99.01128923315996,22.79369257563735
+-99.01132692032171,22.793569041313503
+-99.01130598300963,22.79338760007117
+-99.01107567257826,22.792893460997107
+-99.01081604991035,22.792298947550208
+-99.01058992694139,22.791854991013295
+-99.0104517406828,22.791808665030103
+-99.01024655502593,22.791808665030103
+-99.01007068160558,22.791854991013295
+-99.00978174670114,22.791963084912084
+-99.00949699925872,22.792287366094286
+-99.0088724931437,22.79357911207873
+-99.00825751699254,22.795103771383594
+-99.00964917617155,22.794911778187114</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark></Document></kml>
