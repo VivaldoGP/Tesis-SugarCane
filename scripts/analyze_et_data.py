@@ -25,24 +25,31 @@ def date_from_filename(filename: str):
         return None
 
 
-et_images = {}
+parcelas_df = {}
 
 for file in os.listdir(agera_path):
     if file.endswith('.tif'):
         full_path = os.path.join(agera_path, file)
-        et_images[date_from_filename(filename=full_path)] = full_path
+        fecha = date_from_filename(filename=full_path)
 
-for fecha_, image_path_ in et_images.items():
-    with rasterio.open(image_path_) as isrc:
-        transform = isrc.transform
+        with rasterio.open(full_path) as isrc:
+            transform = isrc.transform
 
-        pixel_values = []
+            with fiona.open(puntos_path, 'r') as src:
+                for feature in src:
+                    geom = shape(feature['geometry'])
+                    x_coord, y_coord = geom.x, geom.y
+                    row, col = isrc.index(x_coord, y_coord)
+                    pixel_value = isrc.read(1, window=((row, row+1), (col, col+1)))
 
-        with fiona.open(puntos_path, 'r') as src:
-            for feature in src:
-                geom = shape(feature['geometry'])
-                x_coord, y_coord = geom.x, geom.y
-                row, col = isrc.index(x_coord, y_coord)
-                pixel_value = isrc.read(1, window=((row, row+1), (col, col+1)))
-                pixel_values.append(pixel_value)
-                print(pixel_value[0][0], feature['properties']['Id'], date_from_filename(image_path_))
+                    parcela_id = feature['properties']['Id']
+
+                    if parcela_id not in parcelas_df:
+                        parcelas_df[parcela_id] = pd.DataFrame(columns=['Fecha', 'Valor'])
+
+                    parcelas_df[parcela_id] = pd.concat([
+                        parcelas_df[parcela_id],
+                        pd.DataFrame({'Fecha': [fecha], 'Valor': [pixel_value[0][0]]})
+                    ])
+
+print(parcelas_df.keys())
