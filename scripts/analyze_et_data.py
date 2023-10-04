@@ -12,6 +12,8 @@ import datetime
 agera_path = r"C:\Users\DELL\Documents\Tesis_sugarCane\pruebas"
 puntos_path = r"C:\Users\DELL\PycharmProjects\Tesis\Parcelas\Centroides\centroides.shp"
 
+et_path = r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\et"
+
 
 def date_from_filename(filename: str):
     try:
@@ -40,7 +42,7 @@ for file in os.listdir(agera_path):
                     geom = shape(feature['geometry'])
                     x_coord, y_coord = geom.x, geom.y
                     row, col = isrc.index(x_coord, y_coord)
-                    pixel_value = isrc.read(1, window=((row, row+1), (col, col+1)))
+                    pixel_value = isrc.read(1, window=((row, row + 1), (col, col + 1)))
 
                     parcela_id = feature['properties']['Id']
 
@@ -52,4 +54,6 @@ for file in os.listdir(agera_path):
                         pd.DataFrame({'Fecha': [fecha], 'Valor': [pixel_value[0][0]]})
                     ])
 
-print(parcelas_df.keys())
+for id_, df_ in parcelas_df.items():
+    df_.to_csv(os.path.join(et_path, f"et_parcela_{id_}.csv"), index=True)
+    print(id_, df_)
