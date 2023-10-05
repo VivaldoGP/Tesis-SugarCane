@@ -75,7 +75,7 @@ ndvi_stats = {}
 for i in parcel_image_list:
     with fiona.open(parcelas_path, "r") as src:
         for features_ in src:
-            if i.get("Parcela_dir") == "Parcela_10":
+            if i.get("Parcela_dir") == "Parcela_16":
                 if features_["properties"]["Id"] == i.get("Parcela_id"):
                     try:
                         with rasterio.open(i.get("Img_path")) as isrc:
@@ -84,7 +84,7 @@ for i in parcel_image_list:
                             ndvi_band = ndvi(isrc)
 
                             zonal_stats = rasterstats.zonal_stats(features_, ndvi_band,
-                                                                  affine=transform)
+                                                                  affine=transform, nodata=-999)
                             print(i.get('Img_path'))
                             print(zonal_stats[0])
                             ndvi_stats[date_from_filename(i.get("Img_path"))] = {"Parcela": i.get("Parcela_id"),
@@ -98,4 +98,4 @@ for i in parcel_image_list:
 # print(ndvi_stats)
 
 ndvi_df = pd.DataFrame.from_dict(ndvi_stats, orient='index')
-ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcela10.csv")
+ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcelas\parcela_16.csv")
