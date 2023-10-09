@@ -1,6 +1,7 @@
 import ee
 import json
 
+
 ee.Initialize()
 
 
@@ -87,12 +88,15 @@ for feature in fc.getInfo()['features']:
     print(f"El área de {fn.getInfo()['properties']['Productor']} es {area.divide(10000).getInfo()}")
 '''
 
-start_date = '2022-01-01'
+start_date = '2022-02-01'
+print(start_date)
 end_date = '2023-05-01'
 
 ic = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED").filterDate(start=start_date, opt_end=end_date).filter(
     ee.Filter.eq('MGRS_TILE', '14QML')
 )
+
+print(ic.getInfo())
 
 try:
     inside = 0
@@ -109,13 +113,13 @@ try:
             inside += 1
             cloud_pixels = count_cloud_pixels(img=ee.Image(image['id']), cloud_percent=50, aoi=fc)
             if '1' not in cloud_pixels:
-                # print(cloud_pixels, 'Limpia')
+                print(cloud_pixels, 'Limpia')
                 images_ready.append(ee.Image(image['id']))
                 cloud_free += 1
             elif '1' in cloud_pixels:
                 if cloud_pixels['1'] < 3000:
                     images_ready.append(ee.Image(image['id']))
-                    # print(cloud_pixels, 'menor a 3k')
+                    print(cloud_pixels, 'menor a 3k')
                     semi_free += 1
         else:
             out += 1
@@ -128,9 +132,12 @@ try:
     for i in images_ready:
         for feature in fc.getInfo()['features']:
             parcela = ee.Feature(feature)
-            # print(f"Imagen: {i}, Parcela: {parcela.getInfo()['properties']['Id']}")
+            print(f"Imagen: {i}, Parcela: {parcela.getInfo()['properties']['Id']}")
+            '''
             export_images(folder='Tesis_caña4', img=i, bands=['B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B11', 'B12'],
-                          aoi=parcela.geometry(), to_crs='EPSG:32614',
+                          aoi=parcela.geometry(),
+                          to_crs='EPSG:32614',
                           filename=f"Parcela_{parcela.getInfo()['properties']['Id']}_{i.getInfo()['id'].replace('/', '_')}")
+                          '''
 finally:
     print('f')

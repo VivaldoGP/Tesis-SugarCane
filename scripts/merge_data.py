@@ -21,10 +21,10 @@ for j in os.listdir(et_path):
     et_dict[number_] = pd.read_csv(os.path.join(et_path, j))
 
 for key, value in parcelas_dict.items():
-    value['Fecha'] = value['Unnamed: 0'].astype('datetime64[ns]')
+    value['Fecha'] = value['Fecha'].astype('datetime64[ns]')
     for key_, value_ in et_dict.items():
         value_['Fecha'] = value_['Fecha'].astype('datetime64[ns]')
         if key == key_:
             merged = pd.merge(value, value_, on='Fecha')
-            merged.drop(['Unnamed: 0_x', 'Unnamed: 0_y'], axis=1, inplace=True)
-            merged.to_csv(os.path.join(merged_path, f"parcela_{key}.csv"), index=True)
+            merged.drop(['Unnamed: 0'], axis=1, inplace=True)
+            merged.to_csv(os.path.join(merged_path, f"parcela_{key}.csv"), index=False)

@@ -1,7 +1,7 @@
 import os
 import shutil
 
-main_path = r'C:\Users\DELL\PycharmProjects\Tesis\pruebas2'
+main_path = r'C:\Users\DELL\PycharmProjects\Tesis\imagenes_2'
 
 parcelas_id = [i.split('_')[1] for i in os.listdir(main_path) if i.endswith('.tif')]
 # print(set(parcelas_id))
