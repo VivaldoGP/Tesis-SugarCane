@@ -14,4 +14,4 @@ for i in os.listdir(data_path):
 for parcela_id, parcela_df in parcelas_df.items():
     parcela_df['Kc'] = 1.15 * parcela_df['ndvi_mean'] + 0.17
     parcela_df['ETc'] = parcela_df['Kc'] * parcela_df['Valor']
-    parcela_df.to_csv(os.path.join(evapo_path, f"parcela_{parcela_id}.csv"), index=True)
+    parcela_df.to_csv(os.path.join(evapo_path, f"parcela_{parcela_id}.csv"), index=False)

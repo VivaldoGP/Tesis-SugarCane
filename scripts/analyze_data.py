@@ -10,7 +10,7 @@ from rasterstats import zonal_stats
 
 np.seterr(divide='ignore', invalid='ignore')
 
-sen_images_path = r"C:\Users\DELL\PycharmProjects\Tesis\imagenes_2"
+sen_images_path = r"G:\Mi unidad\Tesis_5"
 parcelas_path = r"C:\Users\DELL\PycharmProjects\Tesis\Parcelas\SHP\Parcelas.shp"
 
 
@@ -34,7 +34,7 @@ def ndvi(img: DatasetReader):
     Returns:
         un ndarray con los valores del ndvi para pixel
     """
-    nir_band = img.read(7)
+    nir_band = img.read(4)
     red_band = img.read(3)
 
     ndvi_band = (nir_band.astype(float) - red_band.astype(float)) / (nir_band.astype(float) + red_band.astype(float))
@@ -51,8 +51,8 @@ def ndmi(img: DatasetReader):
     Returns:
         un ndarray con los valores del ndvi para pixel
     """
-    nir_band = img.read(7)
-    swir_band = img.read(8)
+    nir_band = img.read(4)
+    swir_band = img.read(5)
 
     ndmi_band = (nir_band.astype(float) - swir_band.astype(float)) / (nir_band.astype(float) + swir_band.astype(float))
 
@@ -73,12 +73,13 @@ for dir_ in os.listdir(sen_images_path):
                                               "Img_path": file_path})
                     # print(date_from_filename(filename=file_path))
 
+
 index_start = 0
 indices_stats = []
 for i in parcel_image_list:
     with fiona.open(parcelas_path, "r") as src:
         for features_ in src:
-            if i.get("Parcela_dir") == "Parcela_8":
+            if i.get("Parcela_dir") == "Parcela_16":
                 if features_["properties"]["Id"] == i.get("Parcela_id"):
                     try:
                         with rasterio.open(i.get("Img_path")) as isrc:
@@ -111,4 +112,4 @@ for i in parcel_image_list:
 # print(ndvi_stats)
 
 ndvi_df = pd.DataFrame(indices_stats)
-ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcelas\parcela_8.csv", index=False)
+ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcelas\parcela_16.csv", index=False)

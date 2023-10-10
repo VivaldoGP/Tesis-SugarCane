@@ -29,8 +29,8 @@ def get_dates_from(start_date, end_date):
 
 
 try:
-    initial_date = datetime(2021, 1, 1)
-    final_date = datetime(2021, 2, 1)
+    initial_date = datetime(2023, 3, 26)
+    final_date = datetime(2023, 5, 1)
 
     dates_generated = get_dates_from(start_date=initial_date, end_date=final_date)
 
@@ -38,7 +38,7 @@ try:
         print(date)
         url_main = f"https://data.apps.fao.org/static/data/c3s/AGERA5_ET0/AGERA5_ET0_{date}.tif"
 
-        local_filename = f"folder/AGERA5_ET0_{date}.tif"
+        local_filename = f"C:/Users/DELL/Documents/Tesis_sugarCane/pruebas/AGERA5_ET0_{date}.tif"
 
         download_data(url=url_main, filename=local_filename)
 
