@@ -27,6 +27,13 @@ Las imágenes exportadas anteriormente son "crudas", solo contienen las bandas n
 y para eso existe [analyze_data](https://github.com/VivaldoGP/Tesis-SugarCane/blob/main/scripts/analyze_data.py), el cual
 calcula el ndvi y ndmi para cada imagen y después calcula las estadísticas básicas para imagen y parcela, exportando un 
 csv con los datos calculados, estos csv se almacenan en la carpeta [parcelas](https://github.com/VivaldoGP/Tesis-SugarCane/tree/main/dataframes/parcelas).
+Este script se apoya en [raster_utils](https://github.com/VivaldoGP/Tesis-SugarCane/tree/main/raster_utils) para calcular los
+índices espectrales, genera las imágenes de forma virtual y cálcula las estadísticas básicas, si se desea exportar las
+imágenes se puede correr el script [write_image](https://github.com/VivaldoGP/Tesis-SugarCane/blob/main/scripts/write_image.py)
+que exporta las imágenes en un stack de bandas, en este caso, las 3 de los índices y conserva los metadatos de la imagen
+original.
+**En mi caso exporté las imágenes a otro path y volví a correr move_files para ordenarlas en carpetas para cada parcela**
+
 
 ## Procesamiento de los datos ET
 
