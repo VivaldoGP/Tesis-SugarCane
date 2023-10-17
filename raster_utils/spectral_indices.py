@@ -20,6 +20,28 @@ def ndvi(img: DatasetReader, nir_band: int = 4, red_band: int = 3):
     return ndvi_band
 
 
+def gndvi(img: DatasetReader, nir_band: int = 4, green_band: int = 2):
+
+    nir_band = img.read(nir_band)
+    green_band = img.read(green_band)
+
+    gndvi_band = (nir_band.astype(float) - green_band.astype(float)) / (nir_band.astype(float) + green_band.astype(float))
+
+    return gndvi_band
+
+
+def evi(img: DatasetReader, nir_band: int = 4, red_band: int = 3, blue_band: int = 1,
+        g: int = 2.5, c1: float = 6.0, c2: float = 7.5, l: float = 1.0):
+
+    nir_band = img.read(nir_band)
+    red_band = img.read(red_band)
+    blue_band = img.read(blue_band)
+
+    evi_band = g * ((nir_band.astype(float) - red_band.astype(float)) / (nir_band.astype(float) + c1 * red_band.astype(float) - c2 * blue_band.astype(float) + l))
+
+    return evi_band
+
+
 def msi(img: DatasetReader, swir_band: int = 5, nir_band: int = 4):
     """
     Calcula el msi
