@@ -56,7 +56,7 @@ def export_images(folder: str, img: Image, aoi: Geometry, to_crs: str, filename:
     Returns:
         Una confirmación por cada imagen exportada correctamente.
     """
-    raw_image = img.select(['B2', 'B3', 'B4', 'B8', 'B11', 'B12'])
+    raw_image = img.select(['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12'])
 
     export_params = {
         'driveFolder': f'{folder}',
@@ -83,7 +83,7 @@ ic = ImageCollection("COPERNICUS/S2_SR_HARMONIZED").filterDate(start=start_date,
 
 print(ic.size().getInfo())
 
-with open(r"C:\Users\DELL\PycharmProjects\Tesis\Parcelas\Parcelas_2.geojson", encoding='utf-8') as geo:
+with open(r"C:\Users\DELL\PycharmProjects\Tesis\Parcelas\Parcelas_final.geojson", encoding='utf-8') as geo:
     parcels = json.load(geo)
 
 
@@ -104,14 +104,14 @@ for parcel in parcels['features']:
             inside += 1
             if '1' not in cloudy_pixels[0]:
                 print(f"Image Id: {image_.id().getInfo()} limpia, {cloudy_pixels[0]}, Parcela: {parcel_feature.getInfo()['properties']['Id']}")
-                export_images(folder='Tesis_5', img=image_, aoi=parcel_bbox.geometry(), to_crs='EPSG:32614', filename=f"{parcel_feature.getInfo()['properties']['Id']}_{image_.id().getInfo()}")
+                export_images(folder='Tesis_7', img=image_, aoi=parcel_bbox.geometry(), to_crs='EPSG:32614', filename=f"{parcel_feature.getInfo()['properties']['Id']}_{image_.id().getInfo()}")
                 # print(f"{parcel_feature.getInfo()['properties']['Id']}_{image_.id().getInfo()}")
                 cloud_free += 1
             elif '0' in cloudy_pixels[0]:
                 if '1' in cloudy_pixels[0]:
                     if cloudy_pixels[0]['0'] > cloudy_pixels[0]['1']:
                         print(f"Image Id: {image_.id().getInfo()} semi-limpia, {cloudy_pixels[0]}, Parcela: {parcel_feature.getInfo()['properties']['Id']}")
-                        export_images(folder='Tesis_5', img=image_, aoi=parcel_bbox.geometry(), to_crs='EPSG:32614',
+                        export_images(folder='Tesis_imagenes_sentinel', img=image_, aoi=parcel_bbox.geometry(), to_crs='EPSG:32614',
                                       filename=f"{parcel_feature.getInfo()['properties']['Id']}_{image_.id().getInfo()}")
 
                         # print(f"{parcel_feature.getInfo()['properties']['Id']}_{image_.id().getInfo()} exportada")
@@ -119,4 +119,4 @@ for parcel in parcels['features']:
         else:
             out += 1
 
-print(f"Dentro: {inside}, Fuera: {out}, Libre de nubes: {cloud_free}, Semi-limpia{semi_free}")
+print(f"Dentro: {inside}, Fuera: {out}, Libre de nubes: {cloud_free}, Semi-limpia: {semi_free}")
