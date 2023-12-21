@@ -1,7 +1,7 @@
 import os
 import shutil
 
-main_path = r'G:\Mi unidad\Tesis_5'
+main_path = r'G:\Mi unidad\Tesis_7'
 
 parcel_ids = [i.split('_')[0] for i in os.listdir(main_path) if i.endswith('.tif')]
 
