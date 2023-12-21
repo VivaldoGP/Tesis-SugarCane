@@ -1,7 +1,7 @@
 from rasterio import DatasetReader
 
 
-def ndvi(img: DatasetReader, nir_band: int = 4, red_band: int = 3):
+def ndvi(img: DatasetReader, nir_band: int = 8, red_band: int = 4):
     """
     Calcula el ndvi
     Args:
@@ -20,7 +20,7 @@ def ndvi(img: DatasetReader, nir_band: int = 4, red_band: int = 3):
     return ndvi_band
 
 
-def gndvi(img: DatasetReader, nir_band: int = 4, green_band: int = 2):
+def gndvi(img: DatasetReader, nir_band: int = 8, green_band: int = 3):
 
     nir_band = img.read(nir_band)
     green_band = img.read(green_band)
@@ -30,7 +30,7 @@ def gndvi(img: DatasetReader, nir_band: int = 4, green_band: int = 2):
     return gndvi_band
 
 
-def evi(img: DatasetReader, nir_band: int = 4, red_band: int = 3, blue_band: int = 1,
+def evi(img: DatasetReader, nir_band: int = 8, red_band: int = 4, blue_band: int = 2,
         g: int = 2.5, c1: float = 6.0, c2: float = 7.5, l: float = 1.0):
 
     nir_band = img.read(nir_band)
@@ -42,7 +42,7 @@ def evi(img: DatasetReader, nir_band: int = 4, red_band: int = 3, blue_band: int
     return evi_band
 
 
-def msi(img: DatasetReader, swir_band: int = 5, nir_band: int = 4):
+def msi(img: DatasetReader, swir_band: int = 11, nir_band: int = 8):
     """
     Calcula el msi
     Args:
@@ -61,7 +61,7 @@ def msi(img: DatasetReader, swir_band: int = 5, nir_band: int = 4):
     return msi_band
 
 
-def ndmi(img: DatasetReader, swir_band: int = 5, nir_band: int = 4):
+def ndmi(img: DatasetReader, swir_band: int = 11, nir_band: int = 8):
     """
     Calcula el ndmi
     Args:
