@@ -17,6 +17,7 @@ def prepare_data(data: DataFrame, start_date: datetime.datetime, end_date: datet
     data['Fecha'] = data['Fecha'].astype('datetime64[ns]')
     data = data.sort_values(by='Fecha', ascending=True)
     data = data[(data['Fecha'] >= start_date) & (data['Fecha'] < end_date)]
+    data = data[data['ndvi_mean'] > 0.2]
 
     return data
 
@@ -65,9 +66,5 @@ for key, value in cleaned_data.items():
         value_['Fecha'] = value_['Fecha'].astype('datetime64[ns]')
         if key == int(key_):
             merged = pd.merge(value, value_, on='Fecha')
-            merged.drop(['Unnamed: 0'], axis=1, inplace=True)
+            # merged.drop(['Unnamed: 0'], axis=1, inplace=True)
             merged.to_csv(os.path.join(merged_path, f"parcela_{key}.csv"), index=False)
-
-
-
-
