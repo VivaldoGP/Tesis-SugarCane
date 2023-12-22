@@ -9,12 +9,12 @@ import pandas as pd
 import rasterio
 from rasterstats import zonal_stats
 
-from raster_utils.spectral_indices import ndvi, msi, ndmi
+from raster_utils.spectral_indices import ndvi, msi, ndmi, evi, gndvi
 from vector_utils.geopro_toos import mem_buffer
 
 np.seterr(divide='ignore', invalid='ignore')
 
-sen_images_path = r"G:\Mi unidad\Tesis_5"
+sen_images_path = r"G:\Mi unidad\Tesis_7"
 parcelas_path = r"C:\Users\DELL\PycharmProjects\Tesis\Parcelas\SHP\Parcelas.shp"
 
 mem = mem_buffer(parcelas_path, buffer_size=-5)
@@ -52,7 +52,7 @@ indices_stats = []
 for i in parcel_image_list:
     with mem.open() as src:
         for features_ in src:
-            if i.get("Parcela_dir") == "Parcela_1":
+            if i.get("Parcela_dir") == "Parcela_16":
                 if features_["properties"]["Id"] == i.get("Parcela_id"):
                     try:
                         with rasterio.open(i.get("Img_path")) as isrc:
@@ -61,12 +61,18 @@ for i in parcel_image_list:
                             ndvi_img = ndvi(isrc)
                             ndmi_img = ndmi(isrc)
                             msi_img = msi(isrc)
+                            gndvi_img = gndvi(isrc)
+                            evi_img = evi(isrc)
 
                             zonal_stats_ndvi = zonal_stats(features_, ndvi_img,
                                                            affine=transform, nodata=-999)
                             zonal_stats_ndmi = zonal_stats(features_, ndmi_img,
                                                            affine=transform, nodata=-999)
                             zonal_stats_msi = zonal_stats(features_, msi_img,
+                                                          affine=transform, nodata=-999)
+                            zonal_stats_gndvi = zonal_stats(features_, gndvi_img,
+                                                            affine=transform, nodata=-999)
+                            zonal_stats_evi = zonal_stats(features_, evi_img,
                                                           affine=transform, nodata=-999)
 
                             index_start += 1
@@ -83,7 +89,13 @@ for i in parcel_image_list:
                                                   "ndmi_max": zonal_stats_ndmi[0]['max'],
                                                   "msi_mean": zonal_stats_msi[0]['mean'],
                                                   "msi_min": zonal_stats_msi[0]['min'],
-                                                  "msi_max": zonal_stats_msi[0]['max']})
+                                                  "msi_max": zonal_stats_msi[0]['max'],
+                                                  "gndvi_mean": zonal_stats_gndvi[0]['mean'],
+                                                  "gndvi_min": zonal_stats_gndvi[0]['min'],
+                                                  "gndvi_max": zonal_stats_gndvi[0]['max'],
+                                                  "evi_mean": zonal_stats_evi[0]['mean'],
+                                                  "evi_min": zonal_stats_evi[0]['min'],
+                                                  "evi_max": zonal_stats_evi[0]['max']})
 
                     except rasterio.errors.RasterioIOError:
                         print(f'Algo salió mal en {i}')
@@ -91,4 +103,4 @@ for i in parcel_image_list:
 # print(ndvi_stats)
 
 ndvi_df = pd.DataFrame(indices_stats)
-ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcelas\parcela_1_test.csv", index=False)
+ndvi_df.to_csv(r"C:\Users\DELL\PycharmProjects\Tesis\dataframes\parcelas\parcela_16.csv", index=False)
